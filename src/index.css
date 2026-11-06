@@ -82,3 +82,19 @@ html.lenis, html.lenis body {
 .animate-float-bob {
   animation: floatBob 6s ease-in-out infinite;
 }
+
+/* Hide Injected Netlify Badge & Drawer */
+#nl-badge-frame,
+iframe[title*="Powered by Netlify"],
+iframe#nl-badge-frame,
+div[data-netlify-drawer],
+#netlify-drawer-container {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+}
