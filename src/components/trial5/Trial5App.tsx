@@ -15,15 +15,6 @@ import { PERSONAL_INFO } from '../../data/portfolioData';
 const Trial5Content: React.FC = () => {
   const { isDark } = useTheme();
   const [activeSection, setActiveSection] = useState<string>('hero');
-  const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -74,16 +65,6 @@ const Trial5Content: React.FC = () => {
         : 'bg-[#F5F3E9] text-[#242722] selection:bg-[#C7D4B8] selection:text-[#141514]'
     }`}>
       
-      {/* Dynamic Cursor Light Aura */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-700 hidden md:block"
-        style={{
-          background: isDark
-            ? `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, rgba(52, 211, 153, 0.05), transparent 80%)`
-            : `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, rgba(199, 212, 184, 0.22), transparent 80%)`,
-        }}
-      />
-
       {/* 1. Custom Animated Page Loader with J. Monogram */}
       <EditorialLoader />
 
