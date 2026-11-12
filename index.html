@@ -28,11 +28,23 @@
       (function() {
         try {
           var mode = localStorage.getItem('editorial_theme_mode');
-          var hour = new Date().getHours();
-          var isNight = hour >= 18 || hour < 6;
-          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var isDark = mode === 'dark' || ((!mode || mode === 'auto') && (isNight || prefersDark));
-          if (mode === 'light') isDark = false;
+          var isDark = false;
+          if (mode === 'dark') {
+            isDark = true;
+          } else if (mode === 'light') {
+            isDark = false;
+          } else {
+            // Auto / Dynamic: follow Browser & System theme preference first
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              isDark = true;
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+              isDark = false;
+            } else {
+              var hour = new Date().getHours();
+              isDark = hour >= 18 || hour < 6;
+            }
+          }
+
           if (isDark) {
             document.documentElement.classList.add('dark');
             document.documentElement.style.backgroundColor = '#070C09';
@@ -44,7 +56,7 @@
       })();
     </script>
   </head>
-  <body class="bg-[#070C09] text-[#E8ECE6] antialiased selection:bg-[#34D399]/25 selection:text-[#34D399] overflow-x-hidden">
+  <body class="bg-[#F5F3E9] text-[#242722] dark:bg-[#070C09] dark:text-[#E8ECE6] antialiased selection:bg-[#34D399]/25 selection:text-[#34D399] overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

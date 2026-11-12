@@ -27,17 +27,23 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
 
   const getDynamicState = useCallback((): { isDark: boolean; reason: string } => {
-    if (typeof window === 'undefined') return { isDark: true, reason: 'Server Default' };
+    if (typeof window === 'undefined') return { isDark: false, reason: 'Server Default' };
 
+    // 1. Primary Priority: User's Browser / Operating System Theme Preference
+    if (window.matchMedia) {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return { isDark: true, reason: 'Browser Dark Mode' };
+      }
+      if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        return { isDark: false, reason: 'Browser Light Mode' };
+      }
+    }
+
+    // 2. Secondary Fallback: Sunset Sync only if browser has no preference
     const hour = new Date().getHours();
-    const isNight = hour >= 18 || hour < 6; // 6 PM to 6 AM is night
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
+    const isNight = hour >= 18 || hour < 6;
     if (isNight) {
       return { isDark: true, reason: `Sunset Sync (${hour >= 18 ? `${hour}:00 PM` : `${hour}:00 AM`} Night)` };
-    }
-    if (prefersDark) {
-      return { isDark: true, reason: 'System Dark Mode' };
     }
     return { isDark: false, reason: 'Daylight Mode' };
   }, []);
@@ -85,24 +91,29 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     updateDynamic();
 
-    // Listen to OS prefers-color-scheme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    // Listen to Browser / OS prefers-color-scheme changes
+    const mediaQueryDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    const mediaQueryLight = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
     const handleMediaChange = () => updateDynamic();
 
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleMediaChange);
-    } else {
-      mediaQuery.addListener(handleMediaChange);
+    if (mediaQueryDark && mediaQueryDark.addEventListener) {
+      mediaQueryDark.addEventListener('change', handleMediaChange);
+      mediaQueryLight?.addEventListener('change', handleMediaChange);
+    } else if (mediaQueryDark && mediaQueryDark.addListener) {
+      mediaQueryDark.addListener(handleMediaChange);
+      mediaQueryLight?.addListener(handleMediaChange);
     }
 
-    // Interval to dynamically re-evaluate time-of-day every 60 seconds
+    // Interval to dynamically re-evaluate every 60 seconds
     const interval = setInterval(updateDynamic, 60000);
 
     return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleMediaChange);
-      } else {
-        mediaQuery.removeListener(handleMediaChange);
+      if (mediaQueryDark && mediaQueryDark.removeEventListener) {
+        mediaQueryDark.removeEventListener('change', handleMediaChange);
+        mediaQueryLight?.removeEventListener('change', handleMediaChange);
+      } else if (mediaQueryDark && mediaQueryDark.removeListener) {
+        mediaQueryDark.removeListener(handleMediaChange);
+        mediaQueryLight?.removeListener(handleMediaChange);
       }
       clearInterval(interval);
     };
