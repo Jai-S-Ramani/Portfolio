@@ -7,10 +7,21 @@
 
   html {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, Cambria, serif;
   }
 }
 
@@ -81,6 +92,36 @@ html.lenis, html.lenis body {
 
 .animate-float-bob {
   animation: floatBob 6s ease-in-out infinite;
+}
+
+@keyframes border-beam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam var(--duration, 8s) infinite linear;
+}
+
+@keyframes holographicShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-holographic {
+  background-size: 200% 200%;
+  animation: holographicShine 4s ease infinite;
 }
 
 /* Hide Injected Netlify Badge & Drawer */
