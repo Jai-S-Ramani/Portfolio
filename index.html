@@ -24,8 +24,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      (function() {
+        try {
+          var mode = localStorage.getItem('editorial_theme_mode');
+          var hour = new Date().getHours();
+          var isNight = hour >= 18 || hour < 6;
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = mode === 'dark' || ((!mode || mode === 'auto') && (isNight || prefersDark));
+          if (mode === 'light') isDark = false;
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.backgroundColor = '#070C09';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.backgroundColor = '#F5F3E9';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#030B0D] text-[#E8F1F2] antialiased selection:bg-[#00D9C0]/25 selection:text-[#00D9C0] overflow-x-hidden">
+  <body class="bg-[#070C09] text-[#E8ECE6] antialiased selection:bg-[#34D399]/25 selection:text-[#34D399] overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
