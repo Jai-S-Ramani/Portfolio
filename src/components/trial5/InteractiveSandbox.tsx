@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play, Terminal, Database, Sliders, CheckCircle2, RefreshCw } from 'lucide-react';
+import { PERSONAL_INFO } from '../../data/portfolioData';
 
 export const InteractiveSandbox: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'sql' | 'model' | 'terminal'>('sql');
@@ -93,8 +94,8 @@ LIMIT 4;`,
     } else if (trimmed === 'contact') {
       output = 'Email: jaisramani05@gmail.com | GitHub: github.com/Jai-S-Ramani | LinkedIn: in/jai-s-ramani-2948532bb';
     } else if (trimmed === 'resume') {
-      output = 'Opening resume repository: https://github.com/Jai-S-Ramani/Resume.git';
-      window.open('https://github.com/Jai-S-Ramani/Resume.git', '_blank');
+      output = 'Opening resume PDF: /Jai_S_Ramani_Resume.pdf';
+      window.open(PERSONAL_INFO.resume, '_blank');
     } else if (trimmed === 'clear') {
       setCommandHistory([]);
       setCurrentInput('');

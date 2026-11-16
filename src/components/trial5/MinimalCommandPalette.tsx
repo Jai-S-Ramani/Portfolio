@@ -100,7 +100,7 @@ export const MinimalCommandPalette: React.FC<MinimalCommandPaletteProps> = ({
     },
     {
       id: 'resume',
-      title: 'Open Resume Repository',
+      title: 'View / Download Resume (PDF)',
       category: 'External',
       action: () => {
         window.open(PERSONAL_INFO.resume, '_blank');

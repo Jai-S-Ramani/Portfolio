@@ -17,7 +17,7 @@ export const PERSONAL_INFO = {
   email: "jaisramani05@gmail.com",
   github: "https://github.com/Jai-S-Ramani",
   linkedin: "https://linkedin.com/in/jai-s-ramani-2948532bb",
-  resume: "https://github.com/Jai-S-Ramani/Resume.git",
+  resume: "/Jai_S_Ramani_Resume.pdf",
   twitter: "https://x.com",
   stats: [
     { label: "Pytest Pass Rate", value: "100% (59/59)" },
