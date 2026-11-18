@@ -34,15 +34,8 @@
           } else if (mode === 'light') {
             isDark = false;
           } else {
-            // Auto / Dynamic: follow Browser & System theme preference first
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-              isDark = true;
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-              isDark = false;
-            } else {
-              var hour = new Date().getHours();
-              isDark = hour >= 18 || hour < 6;
-            }
+            // System mode: strictly follow OS & Browser prefers-color-scheme
+            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
           }
 
           if (isDark) {

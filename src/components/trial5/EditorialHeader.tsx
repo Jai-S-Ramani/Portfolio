@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Copy, Check, Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Copy, Check, Menu, X, Sun, Moon, Monitor } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { useTheme } from './ThemeContext';
 
@@ -100,29 +100,29 @@ export const EditorialHeader: React.FC<EditorialHeaderProps> = ({ activeSection 
             })}
           </nav>
 
-          {/* Right: Dynamic Theme Switcher, Resume, Email & Mobile Hamburger */}
+          {/* Right: Theme Switcher, Resume, Email & Mobile Hamburger */}
           <div className="flex items-center gap-2">
             
-            {/* Dynamic Theme Mode Cycle Button */}
+            {/* Theme Mode Cycle Button (System / Dark / Light) */}
             <button
               onClick={cycleTheme}
-              title={`Current Theme: ${themeMode.toUpperCase()} (${dynamicReason}) — Click to cycle Auto / Dark / Light`}
-              aria-label="Cycle Dynamic Theme Mode"
+              title={`Current Theme: ${themeMode.toUpperCase()} (${dynamicReason}) — Click to cycle System / Dark / Light`}
+              aria-label="Cycle Theme Mode (System / Dark / Light)"
               className={`min-h-[44px] px-3 flex items-center gap-1.5 rounded-full border transition-all cursor-pointer active:scale-95 shadow-sm ${
                 isDark
                   ? 'border-[#243E2E] bg-[#122219] text-[#E8ECE6] hover:border-[#34D399]/60'
                   : 'border-[#C7D4B8] bg-white/70 text-[#141514] hover:bg-white'
               }`}
             >
-              {themeMode === 'auto' ? (
-                <Sparkles className="w-4 h-4 text-[#34D399] animate-pulse" />
+              {themeMode === 'system' ? (
+                <Monitor className="w-4 h-4 text-[#34D399]" />
               ) : isDark ? (
                 <Moon className="w-4 h-4 text-emerald-400" />
               ) : (
                 <Sun className="w-4 h-4 text-amber-500" />
               )}
               <span className="text-[11px] font-mono uppercase font-semibold hidden sm:inline">
-                {themeMode === 'auto' ? 'Dynamic' : isDark ? 'Dark' : 'Light'}
+                {themeMode === 'system' ? 'System' : isDark ? 'Dark' : 'Light'}
               </span>
             </button>
 
@@ -207,20 +207,20 @@ export const EditorialHeader: React.FC<EditorialHeaderProps> = ({ activeSection 
                 </span>
               </div>
 
-              {/* Dynamic Theme Mode Selector Segment */}
+              {/* Theme Mode Selector Segment */}
               <div className={`flex items-center gap-1 p-1 rounded-2xl border ${
                 isDark ? 'border-[#1E3325] bg-black/30' : 'border-[#C7D4B8] bg-white/60'
               }`}>
                 <button
-                  onClick={() => setThemeMode('auto')}
+                  onClick={() => setThemeMode('system')}
                   className={`flex-1 min-h-[38px] flex items-center justify-center gap-1.5 rounded-xl text-xs font-mono transition-all ${
-                    themeMode === 'auto'
+                    themeMode === 'system'
                       ? 'bg-[#34D399] text-[#07100B] font-bold shadow-sm'
                       : 'opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Dynamic</span>
+                  <Monitor className="w-3.5 h-3.5" />
+                  <span>System</span>
                 </button>
                 <button
                   onClick={() => setThemeMode('dark')}
